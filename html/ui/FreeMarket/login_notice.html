@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>FreeMarket</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <!--<link href="css/navbar-fixed-top.css" rel="stylesheet">-->
+
+
+      <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+
+      <!-- Common scripts for FreeMarket -->
+    <script src="js/freemarket_scripts.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+
+<script>
+function login(){
+  // Get the secret phrase
+  var secretPhrase = document.getElementById('user_entered_secret_phrase').value;
+  if (!secretPhrase) { // Form validation
+	document.getElementById("user_entered_secret_phraseErrorMessage").innerHTML="<p class=\"validation_message\">Your account's secret phrase is required.</p>";
+	  }
+	  else
+	  {
+	  //Store secret phrase in local storage
+	  sessionStorage.setItem("uselessInformation", secretPhrase);
+	  // POST the request
+	    $.post( "http://127.0.0.1:7777/nxtpass", { requestType:'login', usersSecretPhrase: $('#user_entered_secret_phrase').val() },
+    
+    function(result){
+
+    	// Store the new account number and secret phrase in local storage
+		sessionStorage.setItem("numericalAccountNumber", result.accountNumber);
+		sessionStorage.setItem("RSaccountNumber", result.RSaccountNumber);
+		sessionStorage.setItem("accountBalance", result.effectiveBalanceNXT);
+		
+		// Update the "user name" and balance
+		document.getElementById("username").innerHTML=sessionStorage.getItem("RSaccountNumber");
+		document.getElementById("accountBalance").innerHTML='Account Balance: <br />' + result.effectiveBalanceNXT;  
+
+    	// Display the new account numbers and remove the Log In button
+    	var replace_loginResult = '';
+
+    	replace_loginResult += '<div class="media-body">';
+    	replace_loginResult += '<p>You have logged in with the following account:</p>';
+    	replace_loginResult += '<a class="p-head" href="#">Reed-Solomon Account ID</a>';
+    	replace_loginResult += '<p>' + result.RSaccountNumber + '</p>';
+    	replace_loginResult += '</div>';
+    	replace_loginResult += '<div class="media-body">';
+    	replace_loginResult += '<a class="p-head" href="#">Numeric Account ID</a>';
+    	replace_loginResult += '<p>' + result.accountNumber + '</p>';
+    	replace_loginResult += '</div>';
+    	replace_loginResult += '<div class="media-body">';
+    	replace_loginResult += '<a class="p-head" href="#">Account Balance</a>';
+    	replace_loginResult += '<p>NXT: ' + result.effectiveBalanceNXT + '</p>';
+    	replace_loginResult += '</div>';
+
+		document.getElementById("loginResult").innerHTML=replace_loginResult;
+	    document.getElementById("user_entered_secret_phraseErrorMessage").innerHTML=""; // Remove validation error message
+
+		
+    }, "json"); // Specifies JSON as the expected result
+	}
+  };
+</script>
+
+
+
+<script>
+function loadAccountInfo(){ // If account number already set, redirect to Change Account Info page
+
+		if (sessionStorage.getItem("RSaccountNumber") !== null)
+		// Redirect to Change Account page
+		var fmlang = localStorage.getItem("fmlang");
+		window.location.href = "change_account_details.html?setLng=" + fmlang;		
+
+  };
+</script>
+
+</head>
+
+<body class="full-width" onload="setLanguage(); setLanguageQueryStrings();">
+
+  <section id="container" class="">
+      <!--header start-->
+      <header class="header white-bg">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                  <span class="fa fa-bar"></span>
+                  <span class="fa fa-bar"></span>
+                  <span class="fa fa-bar"></span>
+              </button>
+
+              <!--logo start-->
+              <a id="logo_link" href="index.html?setLng=en" class="logo" >Free<span>Market</span></a>
+              <!--logo end-->
+              <div class="horizontal-menu navbar-collapse collapse ">
+                  <ul class="nav navbar-nav">
+                      <li><a id="home_link" href="index.html?setLng=en"><span data-i18n="menu_home">Home</span></a></li>
+                      <li class="dropdown">
+                          <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span data-i18n="menu_buy">Buy</span> <b class=" fa fa-angle-down"></b></a>
+                          <ul class="dropdown-menu">
+                              <li><a id="view_all_link" href="ViewAll.html?setLng=en"><span data-i18n="menu_view_all">View All Items</span></a></li>
+                              <li><a id="search_title_link" href="SearchByTitle.html?setLng=en"><span data-i18n="menu_search_title">Search by Title</span></a></li>
+                              <li><a id="search_category_link" href="SearchByCategory.html?setLng=en"><span data-i18n="menu_search_category">Search by Category</span></a></li>
+                              <li><a id="search_tag_link" href="SearchByTag.html?setLng=en"><span data-i18n="menu_search_tag">Search by Tag</span></a></li>
+                              <li><a id="search_seller_link" href="SearchBySellerID.html?setLng=en"><span data-i18n="menu_search_seller">Search by Seller ID</span></a></li>
+                              <li><a id="search_item_link" href="SearchByItemID.html?setLng=en"><span data-i18n="menu_search_item">Search by Item ID</span></a></li>
+                              <li><a id="view_purchases_link" href="ViewYourPurchases.html?setLng=en"><span data-i18n="menu_view_purchases">View Your Purchases</span></a></li>
+                          </ul>
+                      </li>
+                      <li class="dropdown">
+                          <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span data-i18n="menu_sell">Sell</span> <b class=" fa fa-angle-down"></b></a>
+                          <ul class="dropdown-menu">
+                              <li><a id="new_item_link" href="ListNewItem.html?setLng=en"><span data-i18n="menu_list_new">List New Item</span></a></li>
+                              <li><a id="view_items_link" href="ViewYourItems.html?setLng=en"><span data-i18n="menu_view_items">View Your Items</span></a></li>
+                          </ul>
+                      </li>
+                  </ul>
+
+              </div>
+              <div class="top-nav ">
+                  <ul class="nav pull-right top-menu">
+                      <li>
+                          
+                      </li>
+                      <!-- user login dropdown start-->
+                      <li class="dropdown">
+                          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="username" id="username"><span data-i18n="menu_login_button">Log In</span></span>
+                          </a>
+                          <ul class="dropdown-menu extended logout">
+                              <div class="log-arrow-up"></div>
+                              <li><a href="#"><i class=" fa fa-info-circle"></i><div id="accountBalance"><span data-i18n="menu_login_text">Log in to store your secret phrase.</span></div></a></li>
+                              <li><a id="login_link" href="login.html?setLng=en"><i class="fa fa-key"></i><div id="logintext"><span data-i18n="menu_login">Log In</span></div></a></li>
+                          </ul>
+                      </li>
+                      <!-- user login dropdown end -->
+                  </ul>
+              </div>
+
+          </div>
+
+      </header>
+      <!--header end-->
+      <!--sidebar start-->
+
+      <!--sidebar end-->
+      <!--main content start-->
+      <section id="main-content">
+              <section class="wrapper">
+              <!-- page start-->
+              <div class="row">
+
+                  <div class="col-lg-7">
+                      <section class="panel">
+						  <header class="panel-heading">
+                              <b><span data-i18n="header_log_in_required">Log In Required</span></b>
+                          </header>                          
+                          <div class="panel-body">
+									
+
+									<p><span data-i18n="log_in_notice_text">This function requires you to be logged in. Please enter your account's secret phrase below.</span></p>
+                                  <div class="form-group">
+                                      <label for="user_entered_secret_phrase"><span data-i18n="secret_phrase">Secret Phrase</span></label>
+                                      <div class="iconic-input">
+                                          <i class="fa fa-key"></i>
+                                          <input type="text" class="form-control" data-i18n="[placeholder]placeholder_required" id="user_entered_secret_phrase" autofocus>
+                                          <div id="user_entered_secret_phraseErrorMessage"></div>
+                                      </div>
+                                  </div>
+									<div id="loginResult">
+                                  	<button type="button" class="btn btn-default" onclick="login()"><span data-i18n="button_login">Log In</span></button>
+                                  </div>
+                                  
+                                  
+                                  
+						  </div>
+                      </section>
+                   </div>
+				  
+                  
+            <!-- page end-->
+          </section>
+          </div>
+          </section>
+      </section>
+      <!--main content end-->
+
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+    <script type="text/javascript" src="js/hover-dropdown.js"></script>
+    <script src="js/jquery.scrollTo.min.js"></script>
+    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="js/respond.min.js" ></script>
+
+    <!--common script for all pages-->
+    <script src="js/common-scripts.js"></script>
+    <script src="js/i18next.js" type="text/javascript"></script>
+    <script src="js/freemarket_localization_scripts.js" type="text/javascript"></script>
+
+  </body>
+</html>

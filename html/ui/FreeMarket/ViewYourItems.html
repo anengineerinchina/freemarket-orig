@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="img/favicon.png">
+
+    <title>FreeMarket</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
+    <!--external css-->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
+    <link href="assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css" />
+    <!--<link href="css/navbar-fixed-top.css" rel="stylesheet">-->
+
+      <!-- Common scripts for FreeMarket -->
+    <script src="js/freemarket_scripts.js"></script>
+
+      <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/spinner.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->    
+  </head>
+
+
+<script>
+function checkLogin(){ // Redirect the user if the user is not already logged in
+	  var loginStatus = sessionStorage.getItem("loginStatus");
+	  if (loginStatus == 'notloggedin') {
+	  var fmlang = localStorage.getItem("fmlang");
+		  window.location.href = 'login_notice.html' + '?setLng=' + fmlang;
+  	  } 
+};		
+</script>    
+
+
+
+  <body class="full-width" onload="setAccountNumber(); checkLogin(); setLanguage(); setLanguageQueryStrings();">
+
+  <section id="container" class="">
+      <!--header start-->
+      <header class="header white-bg">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                  <span class="fa fa-bar"></span>
+                  <span class="fa fa-bar"></span>
+                  <span class="fa fa-bar"></span>
+              </button>
+
+              <!--logo start-->
+              <a id="logo_link" href="index.html?setLng=en" class="logo" >Free<span>Market</span></a>
+              <!--logo end-->
+              <div class="horizontal-menu navbar-collapse collapse ">
+                  <ul class="nav navbar-nav">
+                      <li><a id="home_link" href="index.html?setLng=en"><span data-i18n="menu_home">Home</span></a></li>
+                      <li class="dropdown">
+                          <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span data-i18n="menu_buy">Buy</span> <b class=" fa fa-angle-down"></b></a>
+                          <ul class="dropdown-menu">
+                              <li><a id="view_all_link" href="ViewAll.html?setLng=en"><span data-i18n="menu_view_all">View All Items</span></a></li>
+                              <li><a id="search_title_link" href="SearchByTitle.html?setLng=en"><span data-i18n="menu_search_title">Search by Title</span></a></li>
+                              <li><a id="search_category_link" href="SearchByCategory.html?setLng=en"><span data-i18n="menu_search_category">Search by Category</span></a></li>
+                              <li><a id="search_tag_link" href="SearchByTag.html?setLng=en"><span data-i18n="menu_search_tag">Search by Tag</span></a></li>
+                              <li><a id="search_seller_link" href="SearchBySellerID.html?setLng=en"><span data-i18n="menu_search_seller">Search by Seller ID</span></a></li>
+                              <li><a id="search_item_link" href="SearchByItemID.html?setLng=en"><span data-i18n="menu_search_item">Search by Item ID</span></a></li>
+                              <li><a id="view_purchases_link" href="ViewYourPurchases.html?setLng=en"><span data-i18n="menu_view_purchases">View Your Purchases</span></a></li>
+                          </ul>
+                      </li>
+                      <li class="dropdown">
+                          <a data-toggle="dropdown" data-hover="dropdown" class="dropdown-toggle" href="#"><span data-i18n="menu_sell">Sell</span> <b class=" fa fa-angle-down"></b></a>
+                          <ul class="dropdown-menu">
+                              <li><a id="new_item_link" href="ListNewItem.html?setLng=en"><span data-i18n="menu_list_new">List New Item</span></a></li>
+                              <li><a id="view_items_link" href="ViewYourItems.html?setLng=en"><span data-i18n="menu_view_items">View Your Items</span></a></li>
+                          </ul>
+                      </li>
+                  </ul>
+
+              </div>
+              <div class="top-nav ">
+                  <ul class="nav pull-right top-menu">
+                      <li>
+                          
+                      </li>
+                      <!-- user login dropdown start-->
+                      <li class="dropdown">
+                          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="username" id="username"><span data-i18n="menu_login_button">Log In</span></span>
+                          </a>
+                          <ul class="dropdown-menu extended logout">
+                              <div class="log-arrow-up"></div>
+                              <li><a href="#"><i class=" fa fa-info-circle"></i><div id="accountBalance"><span data-i18n="menu_login_text">Log in to store your secret phrase.</span></div></a></li>
+                              <li><a id="login_link" href="login.html?setLng=en"><i class="fa fa-key"></i><div id="logintext"><span data-i18n="menu_login">Log In</span></div></a></li>
+                          </ul>
+                      </li>
+                      <!-- user login dropdown end -->
+                  </ul>
+              </div>
+
+          </div>
+
+      </header>
+      <!--header end-->
+      <!--sidebar start-->
+
+      <!--sidebar end-->
+      <!--main content start-->
+      <section id="main-content">
+          <section class="wrapper site-min-height">
+              <!-- page start-->
+              <div class="row">
+                  <div class="col-lg-12">
+                      <section class="panel">
+                          <header class="panel-heading">
+                              <span data-i18n="header_all_your_items">All Your Items</span>
+                          </header>
+                          <div class="panel-body">
+                                <div class="adv-table">
+                                    <table class="display table table-bordered table-striped" id="example">
+                                      <thead>
+                                      <tr>
+                                          <th><span data-i18n="image">Image</span></th>
+                                          <th><span data-i18n="item_id">Item ID</span></th>
+                                          <th><span data-i18n="item_title">Title</span></th>
+                                          <th class="hidden-phone"><span data-i18n="price">Price</span></th>
+                                          <th class="hidden-phone"><span data-i18n="status">Status</span></th>
+                                      </tr>
+                                      </thead>
+                                      <tfoot>
+                                      <tr>
+                                          <th><span data-i18n="image">Image</span></th>
+                                          <th><span data-i18n="item_id">Item ID</span></th>
+                                          <th><span data-i18n="item_title">Title</span></th>
+                                          <th class="hidden-phone"><span data-i18n="price">Price</span></th>
+                                          <th class="hidden-phone"><span data-i18n="status">Status</span></th>
+                                      </tr>
+                                      </tfoot>
+                                    </table>
+                                </div>
+                          </div>
+                      </section>
+                  </div>
+              </div>
+              <!-- page end-->
+          </section>
+      </section>
+      <!--main content end-->
+
+      <script type="text/javascript" language="javascript" src="assets/advanced-datatable/media/js/jquery.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+      <script src="js/jquery.scrollTo.min.js"></script>
+      <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+	  <script type="text/javascript" language="javascript" src="assets/advanced-datatable/media/js/jquery.dataTables2.js"></script>
+      <script type="text/javascript" src="assets/data-tables/DT_bootstrap.js"></script>
+      <script src="js/respond.min.js" ></script>
+      <script src="js/dataTables.fixedHeader.js" ></script>
+
+
+    <!--common script for all pages-->
+    <script src="js/common-scripts.js"></script>
+    <script src="js/i18next.js" type="text/javascript"></script>
+    <script src="js/freemarket_localization_scripts.js" type="text/javascript"></script>
+
+
+    <!--Placeholder viewAll script-->
+      <script type="text/javascript">
+      	  var fmlang = localStorage.getItem("fmlang");
+      	  if (fmlang=="zh"){
+
+      	  var current_lang = {
+					    "sEmptyTable":     "表中数据为空",
+					    "sProcessing":   "处理中...",
+					    "sLengthMenu":   "显示 _MENU_ 项结果",
+					    "sZeroRecords":  "没有匹配结果",
+					    "sInfo":         "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+					    "sInfoEmpty":    "显示第 0 至 0 项结果，共 0 项",
+					    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+					    "sInfoPostFix":  "",
+					    "sSearch":       "搜索:",
+					    "sUrl":          "",
+					    "sLoadingRecords": "载入中...",
+					    "sInfoThousands":  ",",
+					    "oPaginate": {
+					        "sFirst":    "首页",
+					        "sPrevious": "上页",
+					        "sNext":     "下页",
+					        "sLast":     "末页"
+					    },
+					    "oAria": {
+					        "sSortAscending":  ": 以升序排列此列",
+					        "sSortDescending": ": 以降序排列此列"
+					    }
+					};
+					}// End zh if
+		 else	{
+			 
+      	  var current_lang = {
+					    "sEmptyTable":     "No items found.",
+					    "sInfo":           "Showing _START_ to _END_ of _TOTAL_ entries",
+					    "sInfoEmpty":      "Showing 0 to 0 of 0 entries",
+					    "sInfoFiltered":   "(filtered from _MAX_ total entries)",
+					    "sInfoPostFix":    "",
+					    "sInfoThousands":  ",",
+					    "sLengthMenu":     "Show _MENU_ entries",
+					    "sLoadingRecords": "Loading...",
+					    "sProcessing":     "Processing...",
+					    "sSearch":         "Search:",
+					    "sZeroRecords":    "No matching records found",
+					    "oPaginate": {
+					        "sFirst":    "First",
+					        "sLast":     "Last",
+					        "sNext":     "Next",
+					        "sPrevious": "Previous"
+					    },
+					    "oAria": {
+					        "sSortAscending":  ": activate to sort column ascending",
+					        "sSortDescending": ": activate to sort column descending"
+					    }
+						};
+		 		};// End default language	
+					
+      
+          $(document).ready(function() {
+			  var secretPhrase=sessionStorage.getItem("uselessInformation");
+              var table = $('#example').DataTable({
+			  	  "language": current_lang,
+                  "aaSorting": [[ 0, "asc" ]],
+				  "fnInitComplete": function() {
+					  $("#example_filter input").focus();
+					  }             
+              });
+
+			  $.post( "http://127.0.0.1:7777/nxtpass", { requestType:'own_listings', usersSecretPhrase: secretPhrase },              
+              function(data) {
+              
+                  if (data.query_status == "bad")// If no results are returned
+                  {// Open if statement
+                  
+                      document.getElementById("main-content").innerHTML = "No items found";
+                  
+                  }// Close if statement
+                  else {// Open else statement
+                      for (var i = 0; i < data['items'].length; i++) {
+						var displayPrice = data.items[i].price/100000000;
+						var displayStatus = '';
+						var linkStatus = '<a href="ViewYourItems_Results.html';	
+						var listImage = '<i class="fa fa-picture-o fa-3x"></i>';
+						  if (data.items[i].main_image_url > ""){
+						  
+						  	// Clean image URL
+						  	  var cleanURL = escapeHtml(data.items[i].main_image_url);
+							  listImage = '<img src="' + cleanURL +'" alt="Item Thumbnail Image" height="40" width="40">';
+						  }
+						  
+						  // Clean title field
+						  var cleanTitle = escapeHtml(data.items[i].item_title);
+						  
+						  var fmlang = localStorage.getItem("fmlang");
+						  var searchstorage = localStorage.setItem("searchpage","ViewYourItems.html");
+					    
+                      table.rows.add( [[
+                          listImage,
+						  linkStatus + '?setLng=' + fmlang + '&itemid=' + data.items[i].listing_id + '">' + data.items[i].listing_id + '</a>',
+						  linkStatus + '?setLng=' + fmlang + '&itemid=' + data.items[i].listing_id + '">' + cleanTitle + '</a>',
+                          displayPrice,
+                          displayStatus,
+                          data.items[i].listing_id
+                      ], 
+                      ] ).draw();
+                      
+                      };// Close for loop
+                      
+                      //fetch the status for initial page
+                      fetchStatuses();
+                  
+                  }// Close else statement
+                  
+                  //set up fetch status on each page redraw
+                  $('#example').on( 'draw.dt', function () {
+                      fetchStatuses();
+                  });
+                      
+				  }, "json"); // Specifies JSON as the expected result
+          } );
+          
+          function fetchStatuses() {
+            var oTable = $('#example').dataTable();
+            var data = oTable._('tr', { page: "current" });
+            var listings = new Array();
+            
+            //get all listings for the page
+            for (i=0;i<data.length;i++) {
+                listings.push(data[i][5]);
+            }
+            
+            //remove duplicates
+            var cleanlist = $.unique(listings);
+            
+            //format data in object NxtPass expects (reusing previous var..)
+            listings = new Array();
+            for (i=0;i<cleanlist.length;i++) {
+                listings.push({"listing_id": cleanlist[i]});
+            }
+            
+            //create request object
+            var request = {"items": listings};
+            
+           var listing_statuses;
+           $.post( "http://127.0.0.1:7777/nxtpass", "requestType=item_statuses&jsonData=" + JSON.stringify(request),
+                function(data) {
+                    update_statuses(data);
+                },
+                "json"
+            );
+          }
+          
+          function update_statuses(listing_statuses) {
+            var oTable = $('#example').DataTable();
+            //select just currently visible rows
+            var rows = oTable.rows({ page: "current" });
+            //grab the data for those rows
+            var data = rows.data();
+
+            //loop through each row
+            for (i=0;i<data.length;i++) {
+                //loop through each item status returned from NxtPass
+                for (a=0;a<listing_statuses.items.length;a++) {
+                    //if listing_id match then update the status column in the data
+                    if (listing_statuses.items[a].listing_id == data[i][5]) {
+                        data[i][4] = listing_statuses.items[a].item_status;
+                        break;
+                    }
+                }
+            }
+
+            //redraw all the changes
+            rows.invalidate();
+          }
+      </script>
+    <!--End viewAll script-->
+  </body>
+</html>
